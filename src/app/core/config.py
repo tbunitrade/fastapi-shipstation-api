@@ -148,6 +148,30 @@ class CORSSettings(BaseSettings):
     CORS_METHODS: list[str] = ["*"]
     CORS_HEADERS: list[str] = ["*"]
 
+class ShipStationEnv(str, Enum):
+    SANDBOX = "sandbox"
+    PRODUCTION = "production"
+
+class ShipStationSettings(BaseSettings):
+    SHIPSTATION_ENV: ShipStationEnv = ShipStationEnv.SANDBOX
+
+    SHIPSTATION_API_KEY: SecretStr = SecretStr("")
+    SHIPSTATION_BASE_URL: str = "https://api.shipstation.com"
+    SHIPSTATION_TIMEOUT_SECONDS: int = 30
+
+    @computed_field     # type: ignore[prop=decorator]
+    @property
+    def SHIPSTATION_ENV_VALUE(self) -> str:
+        return self.SHIPSTATION_ENV.value
+
+    @computed_field     # type: ignore[prop=decorator]
+    @property
+    def SHIPSTATION_HEADERS(self) -> dict[str, str]:
+        # Api-key
+        key = self.SHIPSTATION_API_KEY.get_secret_value()
+        return {"api-key": key, "Accept": "application/json"}
+
+
 
 class Settings(
     AppSettings,
@@ -164,6 +188,7 @@ class Settings(
     CRUDAdminSettings,
     EnvironmentSettings,
     CORSSettings,
+    ShipStationSettings
 ):
     model_config = SettingsConfigDict(
         env_file=os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "..", ".env"),
