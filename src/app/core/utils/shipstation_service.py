@@ -19,3 +19,12 @@ class ShipStationService:
     async def list_labels(self, *, page: int = 1, page_size: int = 50, **filters: Any) -> Any:
         params: dict[str, Any] = {"page": page, "pageSize": page_size, **filters}
         return (await self._client.get("/labels", params=params)).data
+
+    async def recognize_address(self, *, text: str, address: dict[str, Any] | None = None ) -> Any:
+        payload: dict[str, Any] = {"text": text}
+        if address:
+            payload["address"] = address
+
+        # ShipEngine: PUT /v1/addresses/recognize
+        resp = await self._client.put("/v1/addresses/recognize", json=payload)
+        return resp.data
