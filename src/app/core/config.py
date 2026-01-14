@@ -159,12 +159,12 @@ class ShipStationSettings(BaseSettings):
     SHIPSTATION_BASE_URL: str = "https://api.shipstation.com"
     SHIPSTATION_TIMEOUT_SECONDS: int = 30
 
-    @computed_field     # type: ignore[prop=decorator]
+    @computed_field     # type: ignore[prop-decorator]
     @property
     def SHIPSTATION_ENV_VALUE(self) -> str:
         return self.SHIPSTATION_ENV.value
 
-    @computed_field     # type: ignore[prop=decorator]
+    @computed_field     # type: ignore[prop-decorator]
     @property
     def SHIPSTATION_HEADERS(self) -> dict[str, str]:
         # Api-key
