@@ -220,3 +220,11 @@ Benav Labs – [benav.io](https://benav.io), [discord server](https://discord.co
 <a href="https://benav.io">
   <img src="https://github.com/benavlabs/fastcrud/raw/main/docs/assets/benav_labs_banner.png" alt="Powered by Benav Labs - benav.io"/>
 </a>
+
+
+## Important for Docker Compose chages testing
+fastapi-shipstation-api/docker-compose.yml
+line 90 should be changed.
+#command: python -m pytest ./tests
+command: sh -lc "python -m pip install -q -e . && python -m pip install -q pytest pytest-asyncio httpx faker && python -m pytest -q ./tests"
+    
