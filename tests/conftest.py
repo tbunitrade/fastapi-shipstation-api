@@ -3,6 +3,7 @@ from typing import Any
 from unittest.mock import AsyncMock, Mock
 
 import pytest
+from httpx import ASGITransport, AsyncClient
 from faker import Faker
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
@@ -100,3 +101,9 @@ def current_user_dict():
         "name": fake.name(),
         "is_superuser": False,
     }
+
+@pytest.fixture
+async def async_client():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        yield ac
