@@ -2,7 +2,8 @@
 
 import pytest
 
-@pytest.mark.anyio
+pytestmark = pytest.mark.anyio("asyncio")
+
 async def test_openapi_has_addresses_recognize(async_client):
     r = await async_client.get("/openapi.json")
     assert r.status_code == 200
