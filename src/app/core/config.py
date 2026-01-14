@@ -169,7 +169,7 @@ class ShipStationSettings(BaseSettings):
     def SHIPSTATION_HEADERS(self) -> dict[str, str]:
         # Api-key
         key = self.SHIPSTATION_API_KEY.get_secret_value()
-        return {"api-key": key, "Accept": "application/json"}
+        return {"API-Key": key, "Accept": "application/json"}
 
 
 
