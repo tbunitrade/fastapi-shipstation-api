@@ -808,3 +808,35 @@ jobs:
 ```
 
 This testing guide provides comprehensive coverage of testing strategies for the FastAPI boilerplate, ensuring reliable and maintainable code. 
+
+---
+
+## ShipStation module tests (added in this project)
+
+This section documents the tests that were added specifically for the ShipStation integration.
+
+### What was added
+
+- **Async API tests** with `httpx.AsyncClient` + `ASGITransport`
+- **Dependency override** for `get_shipstation_service` to avoid real upstream calls
+- **Contract tests** validating `/api/v1/addresses/recognize` is present in `/openapi.json`
+
+Files:
+- `tests/test_addresses_recognize.py`
+- `tests/test_openapi_contract.py`
+- `tests/conftest.py` (fixture `async_client`)
+
+### Running tests (Docker Compose)
+
+Tests are executed inside the `pytest` service:
+
+```bash
+docker compose run --rm pytest
+```
+
+Expected output:
+
+```text
+18 passed, 2 warnings in 0.15s
+```
+
